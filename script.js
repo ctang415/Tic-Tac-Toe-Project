@@ -4,13 +4,7 @@ const Gameboard = (() => {
     }
 })();
 
-/*
-const DisplayController = (() => {
-    return {
 
-    }
-})();
-*/
 
 const Player = (name, symbol) => {
     var squares = document.querySelectorAll('.square');
@@ -23,8 +17,31 @@ const Player = (name, symbol) => {
     })
         return {name, symbol, makeMove}
 };
+const nameOne = document.getElementById(nameA)
+const nameTwo = document.getElementById(nameB)
 
-const playerOne = Player('One', 'X')
-const playerTwo = Player('Two', 'O')
 
-playerTwo.makeMove();
+const playerOne = Player(nameOne, 'X')
+const playerTwo = Player(nameTwo, 'O')
+
+
+const displayController = (() => {
+    var currentPlayer = playerOne;
+    const switchPlayer = () => {
+        if (currentPlayer == playerOne) {
+            playerOne.makeMove();
+            console.log(currentPlayer)
+            currentPlayer = playerTwo;
+            console.log(currentPlayer)
+        }
+        else {
+            playerTwo.makeMove();
+            currentPlayer = playerOne;
+        }
+    }
+    return {switchPlayer}
+})();
+
+
+
+
