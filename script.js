@@ -1,6 +1,7 @@
 const Gameboard = (() => {
+    const gameBoard = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
     return {
-        gameBoard: [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+        gameBoard
     }
 })();
 

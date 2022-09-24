@@ -1,3 +1,7 @@
+body {
+    background-color:antiquewhite;
+}
+
 .container {
     display: grid;
     justify-content: center;
@@ -30,6 +34,12 @@
 .submit {
     display: flex;
     justify-content: center;
+}
+
+.submit > button {
+    padding: 7px;
+    width: 8%;
+    border-radius: 10px;
 }
 
 [data-id="0"], [data-id="1"], [data-id="2"] {
