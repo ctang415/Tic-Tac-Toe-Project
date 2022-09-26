@@ -4,17 +4,23 @@ const Gameboard = (() => {
         gameBoard
     }
 })();
-
+/*
 const Player = (name, symbol) => {
     var squares = document.querySelectorAll('.square');
-    const makeMove = () => 
+    const makeMove = () => {
         squares.forEach((square) => { 
         square.addEventListener('click', function() {
         square.textContent = `${symbol}`;
         Gameboard.gameBoard[square.dataset.id] = `${symbol}`;
         })
     })
+}
         return {name, symbol, makeMove}
+};
+*/
+
+const Player = (name, symbol) => {
+        return {name, symbol}
 };
 
 const playerOne = Player('One', 'X')
@@ -31,23 +37,47 @@ button.addEventListener('click', function() {
 */
 
 
-
 const displayController = (() => {
     var currentPlayer = playerOne;
-    const switchPlayer = () => {
-        if (currentPlayer == playerOne) {
-            playerOne.makeMove();
-            currentPlayer = playerTwo;
-        }
-        else {
-            playerTwo.makeMove();
-            currentPlayer = playerOne;
-        }
+        const makeMove = () => {
+            var squares = document.querySelectorAll('.square');
+            squares.forEach((square) => { 
+            square.addEventListener('click', function() {
+            square.textContent = currentPlayer.symbol;
+            Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
+            })
+        })
     }
-    return {switchPlayer}
+    const switchPlayer = () => {
+        if (currentPlayer.symbol === 'X') {
+             currentPlayer = playerTwo;
+        }
+        else if (currentPlayer.symbol === 'O') {
+             currentPlayer = playerOne;
+        }
+
+    }
+            return {makeMove, switchPlayer}
 })();
 
 
 
 
-displayController.switchPlayer();
+const Gameflow = (() => {
+    const play = () => {
+        displayController.makeMove();
+        var squares = document.querySelectorAll('.square');
+        squares.forEach((square) => { 
+        square.addEventListener('click', function() {
+            if () {
+                displayController.switchPlayer();
+            }
+        })
+        })
+    }
+    return {
+        play
+    }
+})();
+
+Gameflow.play();
