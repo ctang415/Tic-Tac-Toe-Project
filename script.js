@@ -39,12 +39,15 @@ button.addEventListener('click', function() {
 
 const displayController = (() => {
     var currentPlayer = playerOne;
-        const makeMove = () => {
+    const makeMove = () => {
             var squares = document.querySelectorAll('.square');
             squares.forEach((square) => { 
             square.addEventListener('click', function() {
+                if(!square.textContent) {
             square.textContent = currentPlayer.symbol;
             Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
+            console.log('clicked')
+                }
             })
         })
     }
@@ -61,16 +64,18 @@ const displayController = (() => {
 })();
 
 
-
-
 const Gameflow = (() => {
     const play = () => {
-        displayController.makeMove();
         var squares = document.querySelectorAll('.square');
         squares.forEach((square) => { 
         square.addEventListener('click', function() {
-            if () {
-                displayController.switchPlayer();
+            if(square.textContent === 'X' || square.textContent === 'O') {
+                console.log('clicked')
+            }
+            else  {
+                displayController.switchPlayer()
+                displayController.makeMove()
+                console.log('clicked')
             }
         })
         })
