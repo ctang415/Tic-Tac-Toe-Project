@@ -44,9 +44,9 @@ const displayController = (() => {
             squares.forEach((square) => { 
             square.addEventListener('click', function() {
                 if(!square.textContent) {
-            square.textContent = currentPlayer.symbol;
-            Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
-            console.log('clicked')
+                    square.textContent = currentPlayer.symbol;
+                    Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
+                    console.log('clicked')
                 }
             })
         })
@@ -69,13 +69,10 @@ const Gameflow = (() => {
         var squares = document.querySelectorAll('.square');
         squares.forEach((square) => { 
         square.addEventListener('click', function() {
-            if(square.textContent === 'X' || square.textContent === 'O') {
-                console.log('clicked')
-            }
-            else  {
-                displayController.switchPlayer()
-                displayController.makeMove()
-                console.log('clicked')
+            if(!(square.textContent === 'X' || square.textContent === 'O')) {
+                displayController.switchPlayer();
+                displayController.makeMove();
+                console.log('hi')
             }
         })
         })
