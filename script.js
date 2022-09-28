@@ -1,30 +1,27 @@
 const Gameboard = (() => {
     const gameBoard = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+    const checkWin = () => {
+        if ((gameBoard[0] === gameBoard[1] && gameBoard[1] === gameBoard[2] && gameBoard[1] != " ") ||
+        (gameBoard[0] === gameBoard[4] && gameBoard[4] === gameBoard[8] && gameBoard[4] != " ") || 
+        (gameBoard[0] === gameBoard[3] && gameBoard[3] === gameBoard[6] && gameBoard[6] != " ") ||
+        (gameBoard[2] === gameBoard[5] && gameBoard[5] === gameBoard[8] && gameBoard[5] != " ") ||
+        (gameBoard[2] === gameBoard[4] && gameBoard[4] === gameBoard[6] && gameBoard[4] != " ") ||
+        (gameBoard[1] === gameBoard[4] && gameBoard[4] === gameBoard[7] && gameBoard[4] != " ") ||
+        (gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5] && gameBoard[4] != " ") ||
+        (gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[7] != " "))
+        window.alert("Game is over")
+
+    }
     return {
-        gameBoard
+        gameBoard, checkWin
     }
 })();
-/*
-const Player = (name, symbol) => {
-    var squares = document.querySelectorAll('.square');
-    const makeMove = () => {
-        squares.forEach((square) => { 
-        square.addEventListener('click', function() {
-        square.textContent = `${symbol}`;
-        Gameboard.gameBoard[square.dataset.id] = `${symbol}`;
-        })
-    })
-}
-        return {name, symbol, makeMove}
-};
-*/
+
 
 const Player = (name, symbol) => {
         return {name, symbol}
 };
 
-const playerOne = Player('One', 'X')
-const playerTwo = Player('Two', 'O')
 
 /*
 const button = document.getElementById('button')
@@ -34,10 +31,15 @@ button.addEventListener('click', function() {
     const nameTwo = document.getElementById('nameB')
 
 })
+
+        [0, 1, 2], [0, 4, 8], [0, 3, 6], [2, 5, 8], [2, 4, 6],
+        [1, 4, 7], [3, 4, 5], [6, 7, 8]
 */
 
 
 const displayController = (() => {
+    const playerOne = Player('One', 'X')
+    const playerTwo = Player('Two', 'O')
     var currentPlayer = playerOne;
     const makeMove = () => {
             var squares = document.querySelectorAll('.square');
@@ -47,6 +49,7 @@ const displayController = (() => {
                     square.textContent = currentPlayer.symbol;
                     Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
                     console.log('clicked')
+                    Gameboard.checkWin();
                 }
             })
         })
@@ -69,10 +72,10 @@ const Gameflow = (() => {
         var squares = document.querySelectorAll('.square');
         squares.forEach((square) => { 
         square.addEventListener('click', function() {
-            if(!(square.textContent === 'X' || square.textContent === 'O')) {
-                displayController.switchPlayer();
+            if(!square.textContent) {
                 displayController.makeMove();
-                console.log('hi')
+                displayController.switchPlayer();
+                console.log('hey')
             }
         })
         })
