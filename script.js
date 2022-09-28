@@ -9,11 +9,19 @@ const Gameboard = (() => {
         (gameBoard[1] === gameBoard[4] && gameBoard[4] === gameBoard[7] && gameBoard[4] != " ") ||
         (gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5] && gameBoard[4] != " ") ||
         (gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[7] != " "))
-        window.alert("Game is over")
-
+            window.alert(`Game is over. ${displayController.currentPlayer.name} wins.`)
+            else if (gameBoard.every(notEmpty)) {
+                window.alert(`It's a tie.`)
+            }
+        }
+        const notEmpty = (index) => {
+            return index != " "
+        }
+    const resetGame = () => {
+        gameBoard = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
     }
     return {
-        gameBoard, checkWin
+        gameBoard, checkWin, resetGame
     }
 })();
 
@@ -38,8 +46,8 @@ button.addEventListener('click', function() {
 
 
 const displayController = (() => {
-    const playerOne = Player('One', 'X')
-    const playerTwo = Player('Two', 'O')
+    const playerOne = Player('Player One', 'X')
+    const playerTwo = Player('Player Two', 'O')
     var currentPlayer = playerOne;
     const makeMove = () => {
             var squares = document.querySelectorAll('.square');
@@ -52,6 +60,7 @@ const displayController = (() => {
                     Gameboard.checkWin();
                 }
             })
+            
         })
     }
     const switchPlayer = () => {
@@ -61,9 +70,17 @@ const displayController = (() => {
         else if (currentPlayer.symbol === 'O') {
              currentPlayer = playerOne;
         }
-
     }
-            return {makeMove, switchPlayer}
+    const endGame = () => {
+        if (Gameboard.checkWin()) {
+            var squares = document.querySelectorAll('.square')
+            squares.forEach((square) => { 
+                square.removeEventListener('click', function() {
+        })
+    })
+}
+    }
+            return {makeMove, switchPlayer, currentPlayer, endGame}
 })();
 
 
