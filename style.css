@@ -31,17 +31,23 @@ body {
     padding: 20px;
     gap: 5px;
     font-size: 20px;
+    font-weight: bolder;
 }
 
 .submit {
     display: flex;
     justify-content: center;
+    gap: 25px;
 }
 
 .submit > button {
     padding: 7px;
-    width: 8%;
+    width: 13%;
     border-radius: 10px;
+}
+
+#first, #second {
+    color: orange;
 }
 
 [data-id="0"], [data-id="1"], [data-id="2"] {
