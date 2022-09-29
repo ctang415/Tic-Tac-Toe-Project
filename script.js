@@ -16,41 +16,52 @@ const Gameboard = (() => {
                 window.alert(`It's a tie.`)
             }
         }
-        const notEmpty = (index) => {
+
+    const notEmpty = (index) => {
             return index != " "
-        }
+    }
+
     const resetGame = () => {
         for(i=0; i < gameBoard.length; i++) {
             gameBoard[i] = ' ';
-            playerOne.name = ''
-            playerTwo.name = ''
-            document.getElementById('nameA').style.display = 'block'
-            document.getElementById('nameB').style.display = 'block'
-            document.getElementById('first').textContent = ''
-            document.getElementById('second').textContent = ''
-            document.getElementById('nameA').value = ' '
-            document.getElementById('nameB').value = ' '
-            container.style.visibility = 'hidden'
         }
+        displayController.clearBoard();
+        playerOne.name = ''
+        playerTwo.name = ''
+        document.getElementById('nameA').style.display = 'block'
+        document.getElementById('nameB').style.display = 'block'
+        document.getElementById('first').textContent = ''
+        document.getElementById('second').textContent = ''
+        document.getElementById('nameA').value = ' '
+        document.getElementById('nameB').value = ' '
+        container.style.visibility = 'hidden'
         button.style.display = 'block'
     }
+
+    const reset = document.getElementById('reset')
+    reset.addEventListener('click', function() {
+    resetGame();
+    })
+
     const container = document.querySelector('.container')
     container.style.visibility = 'hidden'
     const button = document.getElementById('button')
     button.addEventListener('click', function() {
-    const nameOne = document.getElementById('nameA').value
-    const nameTwo = document.getElementById('nameB').value
-    playerOne.name = nameOne;
-    playerTwo.name = nameTwo;
-    document.getElementById('nameA').style.display = 'none'
-    document.getElementById('nameB').style.display = 'none'
-    document.getElementById('first').textContent = nameOne;
-    document.getElementById('second').textContent = nameTwo;
-    console.log(nameOne)
-    console.log(nameTwo)
-    container.style.visibility = 'visible'
-    button.style.display = 'none'
+        const nameOne = document.getElementById('nameA').value
+        const nameTwo = document.getElementById('nameB').value
+        playerOne.name = nameOne;
+        playerTwo.name = nameTwo;
+        document.getElementById('nameA').style.display = 'none'
+        document.getElementById('nameB').style.display = 'none'
+        document.getElementById('first').textContent = nameOne;
+        document.getElementById('second').textContent = nameTwo;
+        console.log(nameOne)
+        console.log(nameTwo)
+        container.style.visibility = 'visible'
+        button.style.display = 'none'
+        displayController.makeMove();
 })
+
     return {
         gameBoard, checkWin, resetGame
     }
@@ -65,24 +76,13 @@ const Player = (name, symbol) => {
 const playerOne = Player('Player One', 'X')
 const playerTwo = Player('Player Two', 'O')
 
-const endGame = () => {
-            var squares = document.querySelectorAll('.square')
-            squares.forEach((square) => { 
-            square.removeEventListener('click', function() {
-        })
-    })
-}
 
-const reset = document.getElementById('reset')
-reset.addEventListener('click', function() {
-    Gameboard.resetGame();
-})
 
 const displayController = (() => {
     var counter = 0;
     var currentPlayer = playerOne;
+    var squares = document.querySelectorAll('.square');
     const makeMove = () => {
-            var squares = document.querySelectorAll('.square');
             squares.forEach((square) => { 
             square.addEventListener('click', function() {
                 if(!square.textContent) {
@@ -96,6 +96,11 @@ const displayController = (() => {
             
         })
     }
+    const clearBoard = () => {
+        squares.forEach((square) => { 
+            square.textContent = ''
+        })
+    }
     const switchPlayer = () => {
         if (currentPlayer.symbol === 'X') {
              currentPlayer = playerTwo;
@@ -104,6 +109,7 @@ const displayController = (() => {
              currentPlayer = playerOne;
         }
     }
+    switchPlayer();
     const declareWinner = () => {
         if(counter%2 != 0) {
             return  window.alert(`${playerOne.name} is the winner.`)
@@ -112,7 +118,8 @@ const displayController = (() => {
             return window.alert(`${playerTwo.name} is the winner.`)
         }
     }
-            return {makeMove, switchPlayer, declareWinner}
+
+            return {makeMove, switchPlayer, declareWinner, clearBoard}
 })();
 
 
@@ -137,3 +144,11 @@ const Gameflow = (() => {
 Gameflow.play();
 
 
+
+const endGame = () => {
+    var squares = document.querySelectorAll('.square')
+    squares.forEach((square) => { 
+    square.removeEventListener('click', function() {
+})
+})
+}
