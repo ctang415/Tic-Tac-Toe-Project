@@ -10,6 +10,7 @@ const Gameboard = (() => {
             (gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5] && gameBoard[4] != " ") ||
             (gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[7] != " ")) {
             displayController.declareWinner();
+            displayController.removeListener()
         }
         else if (gameBoard.every(notEmpty)) {
                 window.alert(`It's a tie.`)
@@ -80,15 +81,16 @@ const displayController = (() => {
     var squares = document.querySelectorAll('.square');
     const makeMove = () => {
             squares.forEach((square) => { 
-            square.addEventListener('click', function() {
+            square.addEventListener('click', square.fn=function fn() {
                 if(!square.textContent) {
                     square.textContent = currentPlayer.symbol;
                     Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
                     counter++;
                     console.log(counter)
                     Gameboard.checkWin();
+                    displayController.switchPlayer();
                 }
-            })
+            }, false)
             
         })
     }
@@ -113,37 +115,25 @@ const displayController = (() => {
     }
     const declareWinner = () => {
         if(counter%2 != 0) {
-              window.alert(`${playerOne.name} is the winner.`)
-              counter = 0
+              window.alert(`${playerOne.name} is the winner.`);
+              counter = 0;
+
         }
         else {
-             window.alert(`${playerTwo.name} is the winner.`)
-             counter = 0
+             window.alert(`${playerTwo.name} is the winner.`);
+             counter = 0;
         }
     }
-            return {makeMove, switchPlayer, declareWinner, clearBoard}
-})();
-
-
-const Gameflow = (() => {
-    const play = () => {
-        var squares = document.querySelectorAll('.square');
+    const removeListener = () =>{
         squares.forEach((square) => { 
-        square.addEventListener('click', function() {
-            if(!square.textContent) {
-                displayController.makeMove();
-                displayController.switchPlayer();
-                console.log('hey')
-            }
-        })
-        })
-    }
-    return {
-        play
-    }
+        square.removeEventListener('click', square.fn, false)
+    })
+}
+            return {makeMove, switchPlayer, declareWinner, clearBoard, removeListener}
 })();
 
-Gameflow.play();
+
+
 
 
 
