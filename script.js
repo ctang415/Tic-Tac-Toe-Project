@@ -10,13 +10,11 @@ const Gameboard = (() => {
             (gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5] && gameBoard[4] != " ") ||
             (gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8] && gameBoard[7] != " ")) {
             displayController.declareWinner();
-            endGame();
         }
         else if (gameBoard.every(notEmpty)) {
                 window.alert(`It's a tie.`)
             }
-        }
-
+        }    
     const notEmpty = (index) => {
             return index != " "
     }
@@ -62,9 +60,7 @@ const Gameboard = (() => {
         displayController.makeMove();
 })
 
-    return {
-        gameBoard, checkWin, resetGame
-    }
+    return {gameBoard, checkWin, resetGame}
 })();
 
 
@@ -89,7 +85,7 @@ const displayController = (() => {
                     square.textContent = currentPlayer.symbol;
                     Gameboard.gameBoard[square.dataset.id] = currentPlayer.symbol;
                     counter++;
-                    console.log('clicked')
+                    console.log(counter)
                     Gameboard.checkWin();
                 }
             })
@@ -102,23 +98,29 @@ const displayController = (() => {
         })
     }
     const switchPlayer = () => {
-        if (currentPlayer.symbol === 'X') {
+        if(currentPlayer === playerOne && counter === 0)
+            currentPlayer === playerOne
+        else if (currentPlayer ===  playerOne) {
              currentPlayer = playerTwo;
+             console.log(currentPlayer.symbol)
+             console.log(currentPlayer)
         }
-        else if (currentPlayer.symbol === 'O') {
+        else if (currentPlayer === playerTwo) {
              currentPlayer = playerOne;
+             console.log(currentPlayer.symbol)
+             console.log(currentPlayer)
         }
     }
-    switchPlayer();
     const declareWinner = () => {
         if(counter%2 != 0) {
-            return  window.alert(`${playerOne.name} is the winner.`)
+              window.alert(`${playerOne.name} is the winner.`)
+              counter = 0
         }
         else {
-            return window.alert(`${playerTwo.name} is the winner.`)
+             window.alert(`${playerTwo.name} is the winner.`)
+             counter = 0
         }
     }
-
             return {makeMove, switchPlayer, declareWinner, clearBoard}
 })();
 
@@ -145,10 +147,5 @@ Gameflow.play();
 
 
 
-const endGame = () => {
-    var squares = document.querySelectorAll('.square')
-    squares.forEach((square) => { 
-    square.removeEventListener('click', function() {
-})
-})
-}
+
+
