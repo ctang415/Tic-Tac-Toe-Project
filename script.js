@@ -13,7 +13,7 @@ const Gameboard = (() => {
             displayController.removeListener()
         }
         else if (gameBoard.every(notEmpty)) {
-                window.alert(`It's a tie.`)
+            displayController.declareTie();
             }
         }    
     const notEmpty = (index) => {
@@ -124,12 +124,16 @@ const displayController = (() => {
              counter = 0;
         }
     }
+    const declareTie = () => {
+        window.alert(`It's a tie.`)
+        counter = 0;
+    }
     const removeListener = () =>{
         squares.forEach((square) => { 
         square.removeEventListener('click', square.fn, false)
     })
 }
-            return {makeMove, switchPlayer, declareWinner, clearBoard, removeListener}
+            return {makeMove, switchPlayer, declareWinner, clearBoard, removeListener, declareTie}
 })();
 
 
